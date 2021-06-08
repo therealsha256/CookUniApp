@@ -28,6 +28,8 @@ const app = Sammy('#rooter', function() {
     this.get('#/user/login', userCtrl.getLogin);
 
     this.post('#/registered', userCtrl.postSignup);
+    this.get('#/registered', userCtrl.getSignup);
+
    
 
 

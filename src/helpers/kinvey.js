@@ -1,7 +1,8 @@
 export default class Kinvey {
     constructor(app_id, app_secret) {
         this.app_id = app_id;
-        this.app_secret = app_secret
+        this.app_secret = app_secret;
+    
     }
     test(data) {
         return new Promise((resolve, reject) => {

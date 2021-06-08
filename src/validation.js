@@ -32,9 +32,81 @@ export const loginValidation = ({email, password}) => {
     return isValid;
 
 }
-export const signupValidatio = ({email, password, password2}) => {
+export const signupValidation = ({firstName, lastName, userName, password, password2}) => {
+    loginValidation({ userName, password });
+    sharedData.password2 = {};
+
+    if (!password2) {
+        msgs.push({ msg: 'Confirmed Password Field is required', class: 'alert-danger' })
+        sharedData.password2.invalid = true;
+    } else if (!validator.equals(password, password2)) {
+        msgs.push({ msg: 'Password not matching', class: 'alert-danger' })
+        sharedData.password2.invalid = true;
+    } else {
+        sharedData.password2.valid = true;
+    }
+
+    let isValid = msgs.length === 0;
+    return isValid;
 
 }
-export const signupValidation = ({email, password}) => {
+export const createValidation = ({email, password}) => {
+    if (!category) {
+        sharedData.category = { invalid: true, valid: false, msg: 'Provide category Information' };
+    } else {
+        sharedData.maker = { valid: true, invalid: false };
+    }
+
+       if (!meal) {
+        sharedData.meal = { invalid: true, valid: false, msg: 'Provide meal information' };
+    } else if (!validator.isInt(meal, { min: 1, max: 45 })) {
+        sharedData.meal = { invalid: true, valid: false, msg: 'Meal information should be 1-45 characters long' };
+    } else {
+        sharedData.meal = { valid: true, invalid: false }
+    }
+
+
+    if (!ingredients) {
+        sharedData.ingredients = { invalid: true, valid: false, msg: 'Provide Ingredients Description' };
+    } else if (!validator.isLength(desc, { min: 3 })) {
+        sharedData.ingredients = { invalid: true, valid: false, msg: 'Description should be at least 3 characters' };
+    } else {
+        sharedData.ingredients = { valid: true, invalid: false };
+    }
+
+
+    if (!prepMethod) {
+        sharedData.prepMethod = { invalid: true, valid: false, msg: 'Provide prep-method' };
+    } else if (!validator.isLength(desc, { min: 3 })) {
+        sharedData.prepMethod = { invalid: true, valid: false, msg: 'Invalid entry, method should be at least 3 characters long' };
+    } else {
+        sharedData.prepMethod = { valid: true, invalid: false }
+    }
+
+    if (!description) {
+        sharedData.description = { invalid: true, valid: false, msg: 'Please Provide a Description' };
+    } else if (!validator.isLength(desc, { min: 3 })) {
+        sharedData.description = { invalid: true, valid: false, msg: 'Description should be at least 3 characters' };
+    } else {
+        sharedData.description = { valid: true, invalid: false };
+    }
+
+    if (!imageUrl) {
+        sharedData.imageUrl = { invalid: true, valid: false, msg: 'Provide ImageUrl' }
+    } else {
+        sharedData.imageUrl = { valid: true, invalid: false }
+    }
+
+    if (sharedData.category.invalid ||
+        sharedData.meal.invalid ||
+        sharedData.ingredients.invalid ||
+        sharedData.prepMethod.invalid ||
+        sharedData.description.invalid ||
+        sharedData.imageUrl.invalid) {
+        msgs.push({ msg: 'Check your input', class: 'alert-danger' })
+    }
+
+    let isValid = msgs.length === 0;
+    return isValid;
 
 }
